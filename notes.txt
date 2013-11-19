@@ -1,0 +1,21 @@
+ - below is the usual jQuery structure
+ - must have the data-role='page'
+ 
+    <div data-role="page">
+                
+        <div data-role="header">
+            <h1>e-Grocery</h1>
+        </div><!-- /header -->
+        
+        <div data-role="content">
+            <p>Hello world</p>
+            <a href='#' onclick='CheckMe();'>Check</a>
+        </div><!-- /content -->
+        
+        <div data-role="footer">
+            <h4>My Footer</h4>
+        </div><!-- /footer -->
+        
+    </div><!-- /page -->
+
+
