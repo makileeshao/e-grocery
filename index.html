@@ -55,6 +55,10 @@
                     navigator.notification.alert("Binded!");
                 });
 				*/
+                
+                $('#btn_budget_save').bind('tap', function(e){
+                    navigator.notification.alert("Now saving " + $('#input_number_budget').val() + "...");
+                });
             });
             
             
@@ -80,9 +84,35 @@
 				Total Budget Left - 99.99<br />
 				<a id='test' href='grocery_list.htm' data-role='button'>Grocery List</a>
 				<a id='test' href='item_list.htm' data-role='button'>Items</a>
-				<a id='test' href='#' data-role='button'>Budget</a>
+				<a id='test' href='#budget' data-role='button'>Budget</a>
 				<a id='test' href='#' data-role='button'>Reports</a>
 				
+			</div><!-- /content -->
+			
+			<div data-role="footer" data-position="fixed">
+				<h4>My Footer</h4>
+			</div><!-- /footer -->
+			
+		</div><!-- /page -->
+        
+        <div data-role="page" id="budget">
+			
+			<div data-role="header">
+				<h1>Budget</h1>
+			</div><!-- /header -->
+			
+			<div data-role="content">
+				Select Month<br />
+				Select Year<br />
+				<br />
+                <div id='divBudgetMessage'></div>
+				<form id="formBudget">
+                    Budget:<br />
+                    <input type="number" pattern="[0-9]*" id="input_number_budget" />
+                    <a id='btn_budget_save' href='#' data-role='button'>Save</a>
+                </form>
+				<a id='btn_global_home' href='index.html' data-role='button'>Home</a>
+                
 			</div><!-- /content -->
 			
 			<div data-role="footer" data-position="fixed">
