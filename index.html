@@ -49,18 +49,22 @@
             }
             */
             
+            function onBodyLoad(){
+                document.addEventListener("deviceready", function(){
+                    $('#btn_budget_save').bind('tap', function(e){
+                        alert("Now saving " + $('#input_number_budget').val() + " for '" + $('#input_yearmonth_budget').val() + "'...");
+                    });
+                    
+                });                
+            }
+            
+            /*
             $(document).bind('pageinit', function(){
-                /*
-				$('#test').bind('tap', function(e){
-                    navigator.notification.alert("Binded!");
-                });
-				*/
-                
                 $('#btn_budget_save').bind('tap', function(e){
-                    navigator.notification.alert("Now saving " + $('#input_number_budget').val() + "...");
+                    alert("Now saving " + $('#input_number_budget').val() + " for '" + $('#input_yearmonth_budget').val() + "'...");
                 });
             });
-            
+            */
             
 			function CheckMe(){
 				navigator.notification.alert("PhoneGap Alert!");
@@ -68,7 +72,7 @@
             
 		</script>
     </head>
-    <body>
+    <body onload='onBodyLoad();'>
 		<div data-role="page">
 			
 			<div data-role="header">
@@ -107,6 +111,8 @@
 				<br />
                 <div id='divBudgetMessage'></div>
 				<form id="formBudget">
+                    Month: <br />
+                    <input type="month" id="input_yearmonth_budget" />
                     Budget:<br />
                     <input type="number" pattern="[0-9]*" id="input_number_budget" />
                     <a id='btn_budget_save' href='#' data-role='button'>Save</a>
