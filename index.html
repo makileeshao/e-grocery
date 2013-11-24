@@ -70,6 +70,7 @@
                     
                 });
                 
+                $('#divMessage').html(e_getDeviceInfo());
                 db_user_SetupDB();
             }
                       
@@ -83,6 +84,7 @@
             </div><!-- /header -->
             
             <div data-role="content">
+                <div id='divMessage'></div><br />
                 Select Month<br />
                 Select Year<br />
                 <br />
