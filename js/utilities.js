@@ -8,11 +8,11 @@ function e_alert(message){
 // console.error(message);
 
 function e_getDeviceInfo(){
-    var info = device.name + '<br />';
-    info = info + device.cordova + '<br />';
-    info = info + device.platform + '<br />';
-    info = info + device.uuid + '<br />';
-    info = info + device.version + '<br />';   
+    var info = 'Name: ' + device.name + '<br />';
+    info = info + 'Cordova: ' + device.cordova + '<br />';
+    info = info + 'Platform: ' + device.platform + '<br />';
+    info = info + 'UUID: ' + device.uuid + '<br />';
+    info = info + 'Version: ' + device.version + '<br />';   
     
     return info;
 }
