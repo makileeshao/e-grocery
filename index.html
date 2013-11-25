@@ -67,6 +67,8 @@
                     $('#btn_budget_save').bind('click', function(e){
                         alert("Now saving " + $('#input_number_budget').val() + " for '" + $('#input_yearmonth_budget').val() + "'...");
                     });
+
+                    $('#spanFooter').html(device.phonegap);
                     
                 });
                 
@@ -99,7 +101,7 @@
             </div><!-- /content -->
             
             <div data-role="footer" data-position="fixed">
-                <h4>My Footer</h4>
+                <h4>Version: <span id='spanFooter' /></h4>
             </div><!-- /footer -->
             
         </div><!-- /page -->
