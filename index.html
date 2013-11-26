@@ -124,7 +124,7 @@
                     Month: <br />
                     <input type="month" id="input_yearmonth_budget" />
                     Budget:<br />
-                    <input type="number" pattern="[0-9]*" id="input_number_budget" />
+                    <input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_number_budget" />
                     <a id='btn_budget_save' href='#' data-role='button'>Save</a>
                 </form>
                 <a id='btn_global_home' href='index.html' data-role='button'>Home</a>
