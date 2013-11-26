@@ -4,7 +4,7 @@ var DB_DISPLAY_NAME = 'Home DB';
 var DB_SIZE = 3 * 1024 * 1024;
 
 function db_user_GetDatabase(){
-    return window.open(DB_NAME, DB_VERSION, DB_DISPLAY_NAME, DB_SIZE);
+    return window.openDatabase(DB_NAME, DB_VERSION, DB_DISPLAY_NAME, DB_SIZE);
 }
 
 function db_user_SetupDB(){
