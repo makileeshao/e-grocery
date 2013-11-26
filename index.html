@@ -68,6 +68,14 @@
                 document.addEventListener("deviceready", function(){
                     $('#btn_budget_save').bind('click', function(e){
                         alert("Now saving " + $('#input_number_budget').val() + " for '" + $('#input_yearmonth_budget').val() + "'...");
+                       var sYYYYMM = $('#input_yearmonth_budget').val();
+                       var nBudget = $('#input_number_budget').val();
+                       localStorage.setItem(sYYYYMM, nBudget);
+                    });
+
+                    $('#btn_budget_refresh').bind('click', function(e){
+                       var sYYYYMM = $('#input_yearmonth_budget').val();
+                       $('#input_number_budget').val(localStorage.getItem(sYYYYMM));
                     });
 
                     $('#spanFooter').html(device.phonegap);
@@ -126,6 +134,7 @@
                     Budget:<br />
                     <input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_number_budget" />
                     <a id='btn_budget_save' href='#' data-role='button'>Save</a>
+                    <a id='btn_budget_refresh' href='#' data-role='button'>Refresh</a>
                 </form>
                 <a id='btn_global_home' href='index.html' data-role='button'>Home</a>
                 
