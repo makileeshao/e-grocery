@@ -35,7 +35,7 @@
         <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
         
         <script type="text/javascript" src="js/utilities.js"></script>
-        <script type="text/javascript" src="js/db.user.js"></script>
+        <script type="text/javascript" src="js/storage.budget.js"></script>
         
         <!-- Custom -->
         <script type="text/javascript">
@@ -65,16 +65,20 @@
 
                 document.addEventListener("deviceready", function(){
                     $('#btn_budget_save').bind('click', function(e){
-                       var sYYYYMM = $('#input_yearmonth_budget').val();
-                       var nBudget = $('#input_number_budget').val();
-                       localStorage.setItem(sYYYYMM, nBudget);
-
-                       e_alert('Saved!');
+                        var sYYYYMM = $('#input_yearmonth_budget').val();
+                        var sBudget = $('#input_number_budget').val();
+                       
+                        if(storage_budget_saveBudget(sYYYYMM, sBudget)){
+                            e_alert('Saved!');
+                        }
+                        else{
+                            e_alert('Hmm... an error.');
+                        }
                     });
 
                     $('#btn_budget_refresh').bind('click', function(e){
                        var sYYYYMM = $('#input_yearmonth_budget').val();
-                       $('#input_number_budget').val(localStorage.getItem(sYYYYMM));
+                       $('#input_number_budget').val(storage_budget_retrieveBudget(sYYYYMM));
                     });
 
                     $('#spanFooter').html(device.cordova);
@@ -82,7 +86,6 @@
                 });
                 
                 $('#divMessage').html(e_getDeviceInfo());
-                db_user_SetupDB();
             }
                       
         </script>
