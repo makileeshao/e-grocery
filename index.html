@@ -74,8 +74,23 @@
                         for(var i = 0; i < arrProducts.length; i++){
                             $('#ul_items').append('<li>' + arrProducts[i].id + arrProducts[i].name + '</li>');
                         }
+
+                        // hide add item section
+                        $('#div_add_item').hide();
+
+                        $('#a_add_item').bind('click', function(e){
+                            $('#div_add_item').show();
+                        });
+
+                        $('#a_save_add_item').bind('click', function(e){
+                            $('#div_add_item').hide();
+                            e_alert('Item Saved');
+                        });
+
                     });
                     
+
+
                     $("#span_footer").each(function(){
                         $(this).html('Version: ' + device.version);
                     });
@@ -156,7 +171,14 @@
             </div><!-- /header -->
             
             <div data-role="content">
-                <ul id='ul_items'></ul>
+                <ul id='ul_items'></ul><br />
+                <a href='#' id='a_add_item' data-role='button' data-inline='true'>Add Item</a>
+                <br />
+    
+                <div id='div_add_item">
+                    Add item<br />
+                    <a href='#' id='a_save_add_item' data-role='button' data-inline='true'>Save Item</a>
+                </div>
             </div><!-- /content -->
                 
             <div data-role="footer" data-position="fixed"></div><!-- /footer -->
