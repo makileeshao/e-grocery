@@ -61,7 +61,20 @@
                        $('#input_number_budget').val(storage_budget_retrieveBudget(sYYYYMM));
                     });
                     
+                    setupStorage();
                     
+                    $('div#page_item').on('pagebeforeshow', function(event){
+                        console.log('clearing items');
+                        $('#ul_items').empty();
+                        
+                        console.log('appending items');
+                        
+                        // get products
+                        var arrProducts = storage_getProducts();
+                        for(var i = 0; i < arrProducts.length; i++){
+                            $('#ul_items').append('<li>' + arrProducts[i].id + arrProducts[i].name + '</li>');
+                        }
+                    });
                     
                     $("#span_footer").each(function(){
                         $(this).html('Version: ' + device.version);
@@ -70,6 +83,17 @@
                 
                 $('#divMessage').html(e_getDeviceInfo());
             }
+            
+            /*
+            $(document).on('pageinit', function(){
+                $('div#page_item').on('pagebeforeshow', function(event){
+                    $('#ul_items').append('<li>one</li>');
+                    $('#ul_items').append('<li>two</li>');
+                    // alert('check');
+                });
+            });
+            */
+            
                       
         </script>
     </head>
@@ -125,20 +149,18 @@
         
         <!-- ITEMS -->
         <div data-role="page" id='page_item'>
-			
-			<div data-role="header">
+            
+            <div data-role="header">
                 <a href='#' data-rel='back' data-icon='home'>Home</a>
-				<h1>e-Grocery - Items</h1>
-			</div><!-- /header -->
-			
-			<div data-role="content">
-				<p>Hello world</p>
-			</div><!-- /content -->
-			
-			<div data-role="footer" data-position="fixed">
-				
-			</div><!-- /footer -->
-		</div><!-- /page -->
+                <h1>e-Grocery - Items</h1>
+            </div><!-- /header -->
+            
+            <div data-role="content">
+                <ul id='ul_items'></ul>
+            </div><!-- /content -->
+                
+            <div data-role="footer" data-position="fixed"></div><!-- /footer -->
+        </div><!-- /page -->
         
         <!-- BUDGET -->
         <div data-role="page" id="page_budget">

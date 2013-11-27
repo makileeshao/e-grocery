@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.eaonworks.mobile.e-grocery" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.eaonworks.mobile.e-grocery" version="0.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>e-Grocery</name>
     <description>
         An every day grocery application to help you in buying, planning... and for asking someone to buy for you :P
