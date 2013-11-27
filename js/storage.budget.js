@@ -1,16 +1,21 @@
+var BUDGET = 'budget-';
+
 function storage_budget_saveBudget(sYYYYMM, sAmount){
     var boolStatus = false;
     try{
         var nAmount = parseFloat(sAmount);
-        localStorage.setItem(sYYYYMM, nAmount);
+        localStorage.setItem(BUDGET + sYYYYMM, nAmount);
         boolStatus = true;
 
+        /*
         var objTest = new Object();
         objTest.budgetDate = sYYYYMM;
         objTest.amount = nAmount;
 
         var sCheck = JSON.stringify(objTest);
         e_alert(sCheck);
+        */
+
     }
     catch(err){
         console.error('storage_budget_saveBudget() - ' + err.description);
@@ -21,5 +26,5 @@ function storage_budget_saveBudget(sYYYYMM, sAmount){
 }
 
 function storage_budget_retrieveBudget(sYYYYMM){
-    return parseFloat(localStorage.getItem(sYYYYMM));
+    return parseFloat(localStorage.getItem(BUDGET + sYYYYMM));
 }
