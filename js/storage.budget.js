@@ -4,9 +4,17 @@ function storage_budget_saveBudget(sYYYYMM, sAmount){
         var nAmount = parseFloat(sAmount);
         localStorage.setItem(sYYYYMM, nAmount);
         boolStatus = true;
+
+        var objTest = new Object();
+        objTest.budgetDate = sYYYYMM;
+        objTest.amount = nAmount;
+
+        var sCheck = JSON.stringify(objTest);
+        e_alert(sCheck);
     }
     catch(err){
         console.error('storage_budget_saveBudget() - ' + err.description);
+        e_alert('Error: ' + err.description);
     }
     
     return boolStatus;
