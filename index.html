@@ -36,8 +36,6 @@
         
         <script type="text/javascript" src="js/utilities.js"></script>
         <script type="text/javascript" src="js/db.user.js"></script>
-
-        <script type="text/javascript" src="http://debug.build.phonegap.com/client/#50768736-50aa-11e3-9fca-22000a98b3d6/target/target-script-min.js"></script>
         
         <!-- Custom -->
         <script type="text/javascript">
@@ -79,7 +77,7 @@
                        $('#input_number_budget').val(localStorage.getItem(sYYYYMM));
                     });
 
-                    $('#spanFooter').html(device.phonegap);
+                    $('#spanFooter').html(device.cordova);
                     
                 });
                 
@@ -93,21 +91,21 @@
         <div data-role="page">
             
             <div data-role="header">
+                <a href='#page_info' id='link_info' data-icon='info'>Info</a>
                 <h1>e-Grocery</h1>
             </div><!-- /header -->
             
             <div data-role="content">
-                <div id='divMessage'></div><br />
                 Select Month<br />
                 Select Year<br />
                 <br />
                 Quick Summary for the month of <month> <year><br />
                 Total Money Spent - 99.99<br />
                 Total Budget Left - 99.99<br />
-                <a id='test' href='grocery_list.htm' data-role='button'>Grocery List</a>
-                <a id='test' href='item_list.htm' data-role='button'>Items</a>
-                <a id='test' href='#budget' data-role='button'>Budget</a>
-                <a id='test' href='#' data-role='button'>Reports</a>
+                <a href='grocery_list.htm' data-role='button'>Grocery List</a>
+                <a href='item_list.htm' data-role='button'>Items</a>
+                <a href='#budget' data-role='button'>Budget</a>
+                <a href='#' data-role='button' data-inline='true'>Reports</a>
                 
             </div><!-- /content -->
             
@@ -125,8 +123,6 @@
             </div><!-- /header -->
             
             <div data-role="content">
-                Select Month<br />
-                Select Year<br />
                 <br />
                 <div id='divBudgetMessage'></div>
                 <form id="formBudget">
@@ -141,7 +137,25 @@
             </div><!-- /content -->
             
             <div data-role="footer" data-position="fixed">
-                <h4>My Footer</h4>
+                <h4>Version: <span id='spanFooter' /></h4>
+            </div><!-- /footer -->
+            
+        </div><!-- /page -->
+        
+        <div data-role="page" id="page_info">
+            
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='home'>Home</a>
+                <h1>e-Grocery - Info</h1>
+            </div><!-- /header -->
+            
+            <div data-role="content">
+                <br />
+                <div id='divMessage'></div><br />
+            </div><!-- /content -->
+            
+            <div data-role="footer" data-position="fixed">
+                <h4>Version: <span id='spanFooter' /></h4>
             </div><!-- /footer -->
             
         </div><!-- /page -->
