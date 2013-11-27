@@ -69,22 +69,60 @@
                         
                         console.log('appending items');
                         
-                        // get products
-                        var arrProducts = storage_getProducts();
-                        for(var i = 0; i < arrProducts.length; i++){
-                            $('#ul_items').append('<li>' + arrProducts[i].id + arrProducts[i].name + '</li>');
-                        }
+                        // refresh products
+                        storage_RefreshList_UL('ul_items');
 
                         // hide add item section
                         $('#div_add_item').hide();
-
                         $('#a_add_item').bind('click', function(e){
-                            $('#div_add_item').show();
+                            $('#input_item_name').val('');
+                            $('#input_item_price').val('');
+                            $('#textarea_item_comment').val('');
+                            
+                            $('#div_add_item').show(500);
+                            $('#a_add_item').hide();
+                            $('#a_clear_item_list').hide();
+                            
                         });
 
+                        // bind actions
                         $('#a_save_add_item').bind('click', function(e){
-                            $('#div_add_item').hide();
-                            e_alert('Item Saved');
+                            if($('#input_item_name').val().trim().length == 0){                                
+                                e_alert('Please fill up name');
+                                $('#input_item_name').focus();
+                            }
+                            else if($('#input_item_price').val().trim().length == 0){
+                                e_alert('Please fill up the price');
+                                $('#input_item_price').focus();
+                            }
+                            else{
+                                storage_addProduct(
+                                    $('#input_item_name').val(), 
+                                    $('#input_item_price').val(), 
+                                    $('#textarea_item_comment').val()
+                                );
+                                
+                                $('#a_add_item').show(500);
+                                $('#a_clear_item_list').show(500);
+                                
+                                $('#div_add_item').hide();
+                                
+                                e_alert('Saved!');
+                                
+                                // refresh products
+                                storage_RefreshList_UL('ul_items');
+                            }
+                        });
+                        
+                        $('#a_clear_item_list').bind('click', function(e){
+                            // clear list
+                            storage_removeAllProducts();
+                            
+                            // refresh list
+                            storage_RefreshList_UL('ul_items');
+                            
+                            // append <no item>
+                            // $('#ul_items').append('<li><no item></li>');
                         });
 
                     });
@@ -173,11 +211,20 @@
             <div data-role="content">
                 <ul id='ul_items'></ul><br />
                 <a href='#' id='a_add_item' data-role='button' data-inline='true'>Add Item</a>
+                <a href='#' id='a_clear_item_list' data-role='button' data-inline='true'>Clear List</a>
                 <br />
     
-                <div id='div_add_item">
-                    Add item<br />
+                <div id='div_add_item'>
+                    <br />
+                    <br />
+                    <hr />
+                    <form id='form_add_item'>   
+                        Name<input type="text" id="input_item_name" /><br />
+                        Price<input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_item_price" />
+                        Comment<textarea rows="4" cols="50" id="textarea_item_comment"></textarea>
+                    </form>
                     <a href='#' id='a_save_add_item' data-role='button' data-inline='true'>Save Item</a>
+                    <hr />
                 </div>
             </div><!-- /content -->
                 

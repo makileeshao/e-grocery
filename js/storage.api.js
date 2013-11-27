@@ -44,6 +44,45 @@ function storage_getProducts(){
     return JSON.parse(localStorage.getItem(LS_KEY_PRODUCT_LIST));
 }
 
+function storage_addProduct(sName, sPrice, sRemarks){
+    var objProduct = new Object();
+    var nPrice = parseFloat(sPrice);
+    
+    // generate index (length + 1)
+    var arrProducts = storage_getProducts();
+    objProduct.id = arrProducts.length;
+    objProduct.name = sName;
+    objProduct.price = nPrice;
+    objProduct.remarks = sRemarks;
+    
+    arrProducts[objProduct.id] = objProduct;
+    localStorage.setItem(LS_KEY_PRODUCT_LIST, JSON.stringify(arrProducts));
+}
+
+function storage_removeAllProducts(){
+    var arrProducts = storage_getProducts();
+    arrProducts.splice(0, arrProducts.length);
+    
+    console.log('after cleaing... ' + JSON.stringify(arrProducts));
+    localStorage.setItem(LS_KEY_PRODUCT_LIST, JSON.stringify(arrProducts));
+}
+
+function storage_RefreshList_UL(element_id){
+    $('#' + element_id).empty();
+    
+    var arrProducts = storage_getProducts();
+    console.log('storage_RefreshList_UL() ' + arrProducts.length);
+    if(arrProducts.length > 0){
+        for(var i = 0; i < arrProducts.length; i++){
+            $('#' + element_id).append('<li>' + arrProducts[i].id + ' - ' + arrProducts[i].name + '</li>');
+        }
+    }
+    else{
+        $('#' + element_id).append('<li>(no item)</li>');
+    }
+}
+
+// Budget
 function storage_budget_saveBudget(sYYYYMM, sAmount){
     var boolStatus = false;
     try{
