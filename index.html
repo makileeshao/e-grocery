@@ -67,10 +67,11 @@
 
                 document.addEventListener("deviceready", function(){
                     $('#btn_budget_save').bind('click', function(e){
-                        alert("Now saving " + $('#input_number_budget').val() + " for '" + $('#input_yearmonth_budget').val() + "'...");
                        var sYYYYMM = $('#input_yearmonth_budget').val();
                        var nBudget = $('#input_number_budget').val();
                        localStorage.setItem(sYYYYMM, nBudget);
+
+                       e_alert('Saved!');
                     });
 
                     $('#btn_budget_refresh').bind('click', function(e){
@@ -136,7 +137,6 @@
                     <a id='btn_budget_save' href='#' data-role='button'>Save</a>
                     <a id='btn_budget_refresh' href='#' data-role='button'>Refresh</a>
                 </form>
-                <a id='btn_global_home' href='index.html' data-role='button'>Home</a>
                 
             </div><!-- /content -->
             
