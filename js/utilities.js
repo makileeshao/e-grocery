@@ -16,3 +16,15 @@ function e_getDeviceInfo(){
     
     return info;
 }
+
+// setup
+function setupStorage(){
+    // init products
+    var sKey = 'product_list';
+    var objProduct = new Object();
+    objProduct.code = 'P1';
+    objProduct.name = 'Haha';
+    objProduct.price = 10;
+    objProduct.remarks = 'test product';
+    localStorage.setItem(objProduct.code, JSON.stringify(objProduct));
+}
