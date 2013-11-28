@@ -74,7 +74,7 @@ function storage_RefreshList_UL(element_id){
     console.log('storage_RefreshList_UL() ' + arrProducts.length);
     if(arrProducts.length > 0){
         for(var i = 0; i < arrProducts.length; i++){
-            $('#' + element_id).append('<li><a href="#">' + arrProducts[i].name + '</a></li>');
+            $('#' + element_id).append('<li>' + arrProducts[i].name + '</li>');
         }
     }
     else{
