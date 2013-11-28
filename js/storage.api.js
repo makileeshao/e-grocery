@@ -74,7 +74,11 @@ function storage_RefreshList_UL(element_id){
     console.log('storage_RefreshList_UL() ' + arrProducts.length);
     if(arrProducts.length > 0){
         for(var i = 0; i < arrProducts.length; i++){
-            $('#' + element_id).append('<li>' + arrProducts[i].id + ' - ' + arrProducts[i].name + '</li>');
+            $('#' + element_id).append(
+                                        '<li><a href="#">'
+                                         + '<h3>' + arrProducts[i].name + '</h3>'
+                                         + '<p>$' + arrProducts[i].price + '</p>'
+                                         + '</a></li>');
         }
     }
     else{
