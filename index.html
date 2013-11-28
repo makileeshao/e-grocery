@@ -113,6 +113,24 @@
                                 storage_RefreshList_UL('ul_items');
                             }
                         });
+
+                        $('#a_scan_item').bind('click', function(e){
+                            var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+
+                            scanner.scan(
+                                function (result) {
+                                    alert("We got a barcode\n" +
+                                        "Result: " + result.text + "\n" +
+                                        "Format: " + result.format + "\n" +
+                                        "Cancelled: " + result.cancelled);
+                                }, 
+                                function (error) {
+                                    alert("Scanning failed: " + error);
+                                }
+                            );
+
+
+                        });
                         
                         $('#a_clear_item_list').bind('click', function(e){
                             // clear list
@@ -222,6 +240,8 @@
                         Name<input type="text" id="input_item_name" /><br />
                         Price<input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_item_price" />
                         Comment<textarea rows="4" cols="50" id="textarea_item_comment"></textarea>
+                        <a href='#' id='a_scan_item' data-role='button'>Scan Code</a>
+                        <div id='div_item_code'></div>
                     </form>
                     <a href='#' id='a_save_add_item' data-role='button' data-inline='true'>Save Item</a>
                     <hr />
