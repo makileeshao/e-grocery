@@ -85,7 +85,7 @@ function storage_RefreshList_UL(element_id){
         // $('#' + element_id).html(sItemList);
         // $('#' + element_id).page();
         $('#' + element_id).append(sItemList);
-        $('#ul_item_list').listview('refresh');
+        $('#' + element_id + ' > ul').listview('refresh');
 
         console.log('div-html-after: ' + $('#' + element_id).html());
     }
