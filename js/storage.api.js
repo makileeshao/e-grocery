@@ -74,7 +74,7 @@ function storage_RefreshList_UL(element_id){
     var arrProducts = storage_getProducts();
     console.log('storage_RefreshList_UL() ' + arrProducts.length);
     if(arrProducts.length > 0){
-        var sItemList = "<ul data-role='listview'>";
+        var sItemList = "<ul id='ul_item_list' data-role='listview'>";
         for(var i = 0; i < arrProducts.length; i++){
             sItemList = sItemList + '<li>' + arrProducts[i].name + '</li>';
         }
@@ -82,8 +82,11 @@ function storage_RefreshList_UL(element_id){
         console.log('sItemList: ' + sItemList);
         
         console.log('div-html-before: ' + $('#' + element_id).html());
-        $('#' + element_id).html(sItemList);
-        $('#' + element_id).page();
+        // $('#' + element_id).html(sItemList);
+        // $('#' + element_id).page();
+        $('#' + element_id).append(sItemList);
+        $('#ul_item_list').listview('refresh');
+
         console.log('div-html-after: ' + $('#' + element_id).html());
     }
     else{
