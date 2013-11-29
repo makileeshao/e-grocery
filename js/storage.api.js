@@ -71,6 +71,8 @@ function storage_RefreshList_UL(element_id){
     console.log('element_id: ' + element_id);
     $('#' + element_id).empty();
     
+    Try{
+
     var arrProducts = storage_getProducts();
     console.log('storage_RefreshList_UL() ' + arrProducts.length);
     if(arrProducts.length > 0){
@@ -91,6 +93,10 @@ function storage_RefreshList_UL(element_id){
     }
     else{
         $('#' + element_id).html('<li>(no item)</li>');
+    }
+
+    }catch(err){
+         Alert('error: ' + err.description);
     }
 }
 
