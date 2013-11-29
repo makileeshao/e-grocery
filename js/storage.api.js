@@ -68,17 +68,26 @@ function storage_removeAllProducts(){
 }
 
 function storage_RefreshList_UL(element_id){
+    console.log('element_id: ' + element_id);
     $('#' + element_id).empty();
     
     var arrProducts = storage_getProducts();
     console.log('storage_RefreshList_UL() ' + arrProducts.length);
     if(arrProducts.length > 0){
+        var sItemList = "<ul data-role='listview'>";
         for(var i = 0; i < arrProducts.length; i++){
-            $('#' + element_id).append('<li>' + arrProducts[i].name + '</li>');
+            sItemList = sItemList + '<li>' + arrProducts[i].name + '</li>';
         }
+        sItemList = sItemList + '</ul>';
+        console.log('sItemList: ' + sItemList);
+        
+        console.log('div-html-before: ' + $('#' + element_id).html());
+        $('#' + element_id).html(sItemList);
+        $('#' + element_id).page();
+        console.log('div-html-after: ' + $('#' + element_id).html());
     }
     else{
-        $('#' + element_id).append('<li>(no item)</li>');
+        $('#' + element_id).html('<li>(no item)</li>');
     }
 }
 
