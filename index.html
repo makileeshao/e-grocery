@@ -78,6 +78,8 @@
                             $('#input_item_name').val('');
                             $('#input_item_price').val('');
                             $('#textarea_item_comment').val('');
+                            $('#input_item_barcode').val('');
+                            $('#input_item_barcode_type').val('');
                             $('#div_item_code').html('');
                             
                             $('#div_add_item').show(500);
@@ -100,7 +102,9 @@
                                 storage_addProduct(
                                     $('#input_item_name').val(), 
                                     $('#input_item_price').val(), 
-                                    $('#textarea_item_comment').val()
+                                    $('#textarea_item_comment').val(),
+                                    $('#input_item_barcode').val(),
+                                    $('#input_item_barcode_type').val()
                                 );
                                 
                                 $('#a_add_item').show(500);
@@ -119,12 +123,19 @@
                             try{
                                 cordova.plugins.barcodeScanner.scan(
                                     function (result) {
-                                        var sBarCodeInfo = "We got a barcode\n" +
+                                        var sBarCodeInfo = "Barcode:\n" +
                                             "Result: " + result.text + "\n" +
                                             "Format: " + result.format + "\n" +
                                             "Cancelled: " + result.cancelled;
+                                        console.log('Barcode: ' + sBarCodeInfo);
                                         
-                                        $('#div_item_code').append(sBarCodeInfo);
+                                        if(result.cancelled <> 0){
+                                            $('#input_item_barcode').val(result.text);
+                                            $('#input_item_barcode_type').val(result.format);
+                                        }
+                                        else{
+                                            $('#div_item_code').append(sBarCodeInfo);
+                                        }
                                     }, 
                                     function (error) {
                                         $('#div_item_code').append("Scanning failed: " + error);
@@ -132,7 +143,7 @@
                                 );
                             }
                             catch(err){
-                                alert('error: ' + err.description);
+                                e_alert('error: ' + err.description);
                             }
                         });
                         
@@ -143,7 +154,6 @@
                             // refresh list
                             storage_RefreshList_UL('div_item_list');                            
                         });
-
                     });
                     
                     $("#span_footer").each(function(){
@@ -243,6 +253,8 @@
                     Name<input type="text" id="input_item_name" /><br />
                     Price<input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_item_price" />
                     Comment<textarea rows="4" cols="50" id="textarea_item_comment"></textarea>
+                    BarCode<input type="text" id="input_item_barcode" readonly /><br />
+                    Type<input type="text" id="input_item_barcode_type" readonly /><br />
                     <a href='#' id='a_scan_item' data-role='button'>Scan Code</a>
                     <div id='div_item_code'></div>
                     
