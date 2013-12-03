@@ -1,5 +1,11 @@
+function loadApp(){
+
 Ext.application({
-name: 'HelloWorld', launch: function () {
-            Ext.Msg.alert('Application launched');
-        }
+    name: 'HelloWorld',
+    launch: function () {
+                Ext.Msg.alert('Application launched');
+            }
 });
+
+}
+
