@@ -95,7 +95,7 @@
                         $('#a_scan_item').bind('click', function(e){
                             try{
                                 var scanner = cordova.require("cordova/plugin/BarcodeScanner");
-                                /*
+                                
                                 scanner.scan(
                                     function (result) {
                                         var sBarCodeInfo = "Barcode:\n" +
@@ -116,7 +116,7 @@
                                         $('#div_item_code').append("Scanning failed: " + error);
                                     }
                                 );
-                                */
+                                
                             }
                             catch(err){
                                 e_alert('error: ' + err.description);
