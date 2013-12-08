@@ -1,7 +1,7 @@
 var DEBUG = 1;
 
 function e_alert(message){
-    navigator.notification.alert(message, function(){});
+    navigator.notification.alert(message, null, 'Alert', 'OK');
 }
 
 // console.log(message);
