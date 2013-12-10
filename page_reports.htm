@@ -39,7 +39,7 @@
         
         <!-- Custom -->
         <script type="text/javascript">
-            $(document).on("pageinit", "#page_reports", function(event) {
+            $(document).bind("mobileinit", function() {
                 $.support.cors = true;
                 $.mobile.allowCrossDomainPages = true;
 
