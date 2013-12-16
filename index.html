@@ -67,11 +67,6 @@
                     // ITEM
                     $('div#page_item').on('pagebeforeshow', function(event){
                         
-                        console.log('clearing items');
-                        $('#ul_items').empty();
-                        
-                        console.log('appending items');
-                        
                         // refresh products
                         storage_RefreshList_UL('div_item_list');
                         
@@ -168,6 +163,65 @@
                     });                    
                     
                     
+                    // STOREs
+                    $('div#page_store').on('pagebeforeshow', function(event){
+                        
+                        // refresh products
+                        console.log('appending stores');
+                        storage_RefreshList_Stores('div_store_list');
+                        
+                        // STORE section - ADD
+                        console.log('binding add store');
+                        $('#div_add_store').hide();                        
+                        $('#a_add_store').bind('click', function(e){
+                            $('#input_store_name').val('');
+                            $('#textarea_store_comment').val('');
+                            
+                            $('#div_add_store').show(500);
+                            $('#a_add_store').hide();
+                            $('#a_clear_store_list').hide();                            
+                        });
+                        
+                        // STORE section - SAVE
+                        console.log('binding save store');
+                        $('#a_save_add_store').bind('click', function(e){
+                            if($('#input_store_name').val().trim().length == 0){                                
+                                e_alert('Please fill up name');
+                                $('#input_store_name').focus();
+                            }
+                            else{
+                                var objStore = new Object();
+                                objStore.name = $('#input_store_name').val();
+                                objStore.remarks = $('#textarea_store_comment').val();
+                                storage_addStore(objStore);
+                                
+                                $('#a_add_store').show(500);
+                                $('#a_clear_store_list').show(500);
+                                
+                                $('#div_add_store').hide();
+                                
+                                e_alert('Saved!');
+                                
+                                // refresh products
+                                storage_RefreshList_Stores('div_store_list');
+                            }
+                        });
+                        
+                        // STORE section - CLEAR
+                        console.log('binding clear store');
+                        $('#a_clear_item_list').bind('click', function(e){
+                            // clear list
+                            storage_removeAllStores();
+                            
+                            // refresh list
+                            storage_RefreshList_Stores('div_store_list');                            
+                        });
+                    });     
+                    
+                    
+                    
+                    
+                    
                     
                     $("#span_footer").each(function(){
                         $(this).html('Version: ' + device.version);
@@ -198,6 +252,7 @@
                 Total Budget Left - 99.99<br />
                 <a href='#page_grocery' data-role='button'>Grocery List</a>
                 <a href='#page_item' data-role='button'>Items</a>
+                <a href='#page_store' data-role='button'>Stores</a>
                 <a href='#page_budget' data-role='button'>Budget</a>
                 <a href='page_reports.htm' data-role='button' data-inline='true'>Reports</a>
                 
@@ -268,6 +323,45 @@
                 
             <div data-role="footer" data-position="fixed"></div><!-- /footer -->
         </div><!-- /page -->
+        
+        
+        
+        <!-- STORES -->
+        <div data-role="page" id='page_store'>
+            
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='home'>Home</a>
+                <h1>e-Grocery - Stores</h1>
+            </div><!-- /header -->
+            
+            <div data-role="content">                
+                <h2>Store List</h2>
+                <br />
+                <br />
+                <div id='div_store_list'></div>
+                <br />
+                
+                <a href='#' id='a_add_store' data-role='button' data-inline='true'>Add Store</a>
+                <a href='#' id='a_clear_store_list' data-role='button' data-inline='true'>Clear List</a>
+                <br />
+    
+                <div id='div_add_store'>
+                    <br />
+                    <br />
+                    <hr />
+                    Name<input type="text" id="input_store_name" /><br />
+                    Comment<textarea rows="4" cols="50" id="textarea_store_comment"></textarea>                    
+                    <a href='#' id='a_save_add_store' data-role='button' data-inline='true'>Save Store</a>
+                    <hr />
+                </div>
+            </div><!-- /content -->
+                
+            <div data-role="footer" data-position="fixed"></div><!-- /footer -->
+        </div><!-- /page -->
+        
+        
+        
+        
         
         <!-- BUDGET -->
         <div data-role="page" id="page_budget">
