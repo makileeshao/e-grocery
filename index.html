@@ -47,6 +47,7 @@
                     setupStorage();
                     
                     // BUDGET
+                    $('#btn_budget_save').unbind('click');
                     $('#btn_budget_save').bind('click', function(e){
                         var sYYYYMM = $('#input_yearmonth_budget').val();
                         var sBudget = $('#input_number_budget').val();
@@ -58,7 +59,8 @@
                             e_alert('Hmm... an error.');
                         }
                     });
-
+                    
+                    $('#btn_budget_refresh').unbind('click');
                     $('#btn_budget_refresh').bind('click', function(e){
                        var sYYYYMM = $('#input_yearmonth_budget').val();
                        $('#input_number_budget').val(storage_budget_retrieveBudget(sYYYYMM));
@@ -71,7 +73,8 @@
                         storage_RefreshList_UL('div_item_list');
                         
                         // ITEM section - ADD
-                        $('#div_add_item').hide();                        
+                        $('#div_add_item').hide();
+                        $('#a_add_item').unbind('click');
                         $('#a_add_item').bind('click', function(e){
                             $('#input_item_name').val('');
                             $('#input_item_price').val('');
@@ -86,6 +89,7 @@
                         });
                         
                         // ITEM section - SCAN
+                        $('#a_scan_item').unbind('click');
                         $('#a_scan_item').bind('click', function(e){
                             // below code current is causing the problem
                             /*
@@ -98,7 +102,7 @@
                                             "Result: " + result.text + "\n" +
                                             "Format: " + result.format + "\n" +
                                             "Cancelled: " + result.cancelled;
-                                        console.log('Barcode: ' + sBarCodeInfo);
+                                        e_log('Barcode: ' + sBarCodeInfo);
                                         
                                         if(result.cancelled <> 0){
                                             $('#input_item_barcode').val(result.text);
@@ -122,6 +126,7 @@
                         });
                         
                         // ITEM section - SAVE
+                        $('#a_save_add_item').unbind('click');
                         $('#a_save_add_item').bind('click', function(e){
                             if($('#input_item_name').val().trim().length == 0){                                
                                 e_alert('Please fill up name');
@@ -153,6 +158,7 @@
                         });
                         
                         // ITEM section - CLEAR
+                        $('#a_clear_item_list').unbind('click');
                         $('#a_clear_item_list').bind('click', function(e){
                             // clear list
                             storage_removeAllProducts();
@@ -167,12 +173,13 @@
                     $('div#page_store').on('pagebeforeshow', function(event){
                         
                         // refresh products
-                        console.log('appending stores');
+                        e_log('appending stores');
                         storage_RefreshList_Stores('div_store_list');
                         
                         // STORE section - ADD
-                        console.log('binding add store');
-                        $('#div_add_store').hide();                        
+                        e_log('binding add store');
+                        $('#div_add_store').hide();
+                        $('#a_add_store').unbind('click');
                         $('#a_add_store').bind('click', function(e){
                             $('#input_store_name').val('');
                             $('#textarea_store_comment').val('');
@@ -183,7 +190,8 @@
                         });
                         
                         // STORE section - SAVE
-                        console.log('binding save store');
+                        e_log('binding save store');
+                        $('#a_save_add_store').unbind('click');
                         $('#a_save_add_store').bind('click', function(e){
                             if($('#input_store_name').val().trim().length == 0){                                
                                 e_alert('Please fill up name');
@@ -208,7 +216,8 @@
                         });
                         
                         // STORE section - CLEAR
-                        console.log('binding clear store');
+                        e_log('binding clear store');
+                        $('#a_clear_store_list').unbind('click');
                         $('#a_clear_store_list').bind('click', function(e){
                             // clear list
                             storage_removeAllStores();

@@ -6,6 +6,14 @@ function e_alert(message){
     console.log(message);
 }
 
+function e_log(message){
+    console.log(message);
+}
+
+function e_error(message){
+    console.error(message);
+}
+
 // console.log(message);
 // console.error(message);
 
