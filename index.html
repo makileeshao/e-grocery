@@ -42,9 +42,15 @@
                 $.support.cors = true;
                 $.mobile.allowCrossDomainPages = true;
                 
+                
+                
                 document.addEventListener("deviceready", function(){
                     // e_alert('Device Ready Again!');
                     setupStorage();
+                    
+                    // MAIN - Page Info
+                    $('#span_total_money').html(getTotalMoneySpent());
+                    $('#span_total_budget').html(getTotalBudget());
                     
                     // BUDGET
                     $('#btn_budget_save').unbind('click');
@@ -169,6 +175,18 @@
                     });                    
                     
                     
+                    // ITEMS - BOUGHT
+                    $('div#page_item_bought').on('pagebeforeshow', function(event){
+                        $('#a_bought_save').unbind('click');
+                        $('#a_bought_save').bind('click', function(){
+                            // returned in YYYY-MM-DD format
+                            if($('#input_bought_yearmonth').val().trim().length == 0){                                
+                                alert('Please fill up date');
+                                $('#input_bought_yearmonth').focus();
+                            }
+                        });
+                    });
+                    
                     // STOREs
                     $('div#page_store').on('pagebeforeshow', function(event){
                         
@@ -246,20 +264,19 @@
     <body onload='onBodyLoad();'>
     
         <!-- MAIN -->
-        <div data-role="page">
+        <div data-role="page" id='page_main'>
             <div data-role="header">
                 <a href='#page_info' id='link_info' data-icon='info'>Info</a>
-                <h1>e-Grocery 1.1a</h1>
+                <h1>e-Grocery 1.2</h1>
             </div><!-- /header -->
             
             <div data-role="content">
-                Select Month<br />
-                Select Year<br />
                 <br />
                 Quick Summary for the month of <month> <year><br />
-                Total Money Spent - 99.99<br />
-                Total Budget Left - 99.99<br />
-                <a href='#page_grocery' data-role='button'>Grocery List</a>
+                Total Money Spent - <span id='span_total_money'></span><br />
+                Total Budget Left - <span id='span_total_budget'></span><br />
+                <a href='#page_grocery_list' data-role='button'>Grocery List</a>
+                <a href='#page_item_bought' data-role='button'>Purchase</a>
                 <a href='#page_item' data-role='button'>Items</a>
                 <a href='#page_store' data-role='button'>Stores</a>
                 <a href='#page_budget' data-role='button'>Budget</a>
@@ -272,26 +289,7 @@
             </div><!-- /footer -->
         </div><!-- /page -->
         
-        
-        
-        <!-- GROCERY -->
-        <div data-role="page" id='page_grocery'>
-            
-            <div data-role="header">
-                <a href='#' data-rel='back' data-icon='home'>Home</a>
-                <h1>e-Grocery - Lists</h1>
-            </div><!-- /header -->
-            
-            <div data-role="content">
-                <p>Hello world</p>
-            </div><!-- /content -->
-            
-            <div data-role="footer" data-position="fixed">
-                
-            </div><!-- /footer -->
-        </div><!-- /page -->
-        
-        
+
         
         
         <!-- ITEMS -->
@@ -331,6 +329,36 @@
             </div><!-- /content -->
                 
             <div data-role="footer" data-position="fixed"></div><!-- /footer -->
+        </div><!-- /page -->
+        
+        
+        
+        
+        <!-- ITEMS - BOUGHT -->
+        <div data-role="page" id="page_item_bought">
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='home'>Home</a>
+                <h1>Items Bought</h1>
+            </div><!-- /header -->
+            
+            <div data-role="content">
+                <br />
+                Date of Purchase: <br />
+                <input type="date" id="input_bought_yearmonth" />
+                
+                Store:<br />
+                Product:<br />
+                Price:<br />
+                Quantity:<br />
+                Remarks:<br />
+                
+                <a id='a_bought_save' href='#' data-role='button'>Save</a>
+                <a id='a_bought_refresh' href='#' data-role='button'>Refresh</a>
+            </div><!-- /content -->
+            
+            <div data-role="footer" data-position="fixed">
+                
+            </div><!-- /footer -->
         </div><!-- /page -->
         
         
@@ -396,6 +424,65 @@
                 
             </div><!-- /footer -->
         </div><!-- /page -->
+        
+        
+        
+        <!-- GROCERY - LIST -->
+        <div data-role="page" id='page_grocery_list'>
+            
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='home'>Home</a>
+                <h1>e-Grocery - Lists</h1>
+            </div><!-- /header -->
+            
+            
+            <div data-role="content">
+                <h1>Your List...</h1>
+                <ul data-role='listview' data-inset='true'>
+                    <li><a href='#page_grocery_detail?id=1'>2013-12-17-0001</a></li>
+                    <li><a href='#page_grocery_detail?id=2'>2013-12-17-0002</a></li>
+                    <li><a href='#page_grocery_detail?id=3'>2013-12-17-0003</a></li>
+                    <li><a href='#page_grocery_detail?id=4'>2013-12-17-0004</a></li>
+                    <li><a href='#page_grocery_detail?id=5'>2013-12-17-0005</a></li>
+                </ul>
+                
+            </div><!-- /content -->
+            
+            
+            
+            <div data-role="footer" data-position="fixed"></div><!-- /footer -->
+        </div><!-- /page -->
+        
+        <!-- GROCERY - DETAIL -->
+        <div data-role="page" id='page_grocery_detail'>
+            
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='back'>Back</a>
+                <h1>e-Grocery - Edit List</h1>
+            </div><!-- /header -->
+            
+            
+            <div data-role="content">
+                <h1>To Buy...</h1>
+                <ul data-role='listview' data-inset='true'>
+                    <li>Item1</li>
+                    <li>Item2</li>
+                    <li>Item3</li>
+                </ul>
+                
+            </div><!-- /content -->
+            
+            
+            
+            <div data-role="footer" data-position="fixed"></div><!-- /footer -->
+        </div><!-- /page -->
+        
+        
+        
+        
+        
+        
+        
         
         
         
