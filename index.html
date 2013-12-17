@@ -175,16 +175,90 @@
                     });                    
                     
                     
-                    // ITEMS - BOUGHT
-                    $('div#page_item_bought').on('pagebeforeshow', function(event){
-                        $('#a_bought_save').unbind('click');
-                        $('#a_bought_save').bind('click', function(){
-                            // returned in YYYY-MM-DD format
-                            if($('#input_bought_yearmonth').val().trim().length == 0){                                
-                                alert('Please fill up date');
-                                $('#input_bought_yearmonth').focus();
-                            }
+                    // ITEMS - PURCHASE
+                    $('div#page_item_purchase').on('pagebeforeshow', function(event){
+                        $('#input_purchase_product').unbind('change');
+                        $('#input_purchase_product').bind('change', function(){
+                            $('#input_purchase_price').val(getProductPrice($(this).val()));
+                            
+                            var nPrice = parseFloat($('#input_purchase_price').val()); if(isNaN(nPrice)) nPrice = 0;
+                            var nQuantity = parseFloat($('#input_purchase_quantity').val()); if(isNaN(nQuantity)) nQuantity = 0;
+                            $('#span_purchase_amount').html('$' + nPrice * nQuantity);                            
                         });
+                        
+                        // on price change
+                        $('#input_purchase_price').unbind('change');
+                        $('#input_purchase_price').bind('change', function(){
+                            var nPrice = parseFloat($('#input_purchase_price').val()); if(isNaN(nPrice)) nPrice = 0;
+                            var nQuantity = parseFloat($('#input_purchase_quantity').val()); if(isNaN(nQuantity)) nQuantity = 0;
+                            $('#span_purchase_amount').html('$' + nPrice * nQuantity);
+                        });
+                        
+                        // on quantity change
+                        $('#input_purchase_quantity').unbind('change');
+                        $('#input_purchase_quantity').bind('change', function(){
+                            var nPrice = parseFloat($('#input_purchase_price').val()); if(isNaN(nPrice)) nPrice = 0;
+                            var nQuantity = parseFloat($('#input_purchase_quantity').val()); if(isNaN(nQuantity)) nQuantity = 0;
+                            $('#span_purchase_amount').html('$' + nPrice * nQuantity);
+                        });
+                        
+                        // ACTION: Save Purchase
+                        $('#a_purchase_save').unbind('click');
+                        $('#a_purchase_save').bind('click', function(){
+                            var nPrice = parseFloat($('#input_purchase_price').val()); if(isNaN(nPrice)) nPrice = 0;
+                            var nQuantity = parseFloat($('#input_purchase_quantity').val()); if(isNaN(nQuantity)) nQuantity = 0;
+                        
+                            // returned in YYYY-MM-DD format
+                            if($('#input_purchase_yearmonth').val().trim().length == 0){                                
+                                alert('Please fill up date');
+                                $('#input_purchase_yearmonth').focus();
+                            }
+                            else if($('#input_purchase_store').val().trim().length == 0){
+                                alert('Please select a store');
+                                $('#input_purchase_store').focus();
+                            }
+                            else if($('#input_purchase_product').val().trim().length == 0){
+                                alert('Please select a product');
+                                $('#input_purchase_product').focus();
+                            }
+                            else if(nPrice == 0){
+                                alert('Price cannot be zero');
+                                $('#input_purchase_price').focus();
+                            }
+                            else if(nQuantity == 0){
+                                alert('Quantity cannot be zero');
+                                $('#input_purchase_quantity').focus();
+                            }
+                            else{
+                                var storeID = getStoreID($('#input_purchase_store').val().trim());
+                                var productID = getProductID($('#input_purchase_product').val().trim());
+                                
+                                if(storeID == -1){ // create this store if non-existent
+                                    var objStore = new Object();
+                                    objStore.name = $('#input_purchase_store').val();
+                                    objStore.remarks = 'added by purchase';
+                                    storage_addStore(objStore);
+                                    
+                                    storeID = getStoreID($('#input_purchase_store').val().trim());
+                                }
+                                
+                                if(productID == -1){ // create this product if non-existent
+                                    storage_addProduct($('#input_purchase_store').val(), nPrice, '', '', '');
+                                    productID = getProductID($('#input_purchase_store').val().trim());
+                                }
+                                
+                                var objPurchase = new Object();                                
+                                objPurchase.storeID = storeID;
+                                objPurchase.productID = productID;
+                                objPurchase.price = nPrice;
+                                objPurchase.quantity = nQuantity;
+                                objPurchase.remarks = $('#textarea_purchase_remarks').val();
+                                
+                                storage_addPurchase(objPurchase);
+                                alert('saved!');
+                            }
+                            
+                        });                       
                     });
                     
                     // STOREs
@@ -245,9 +319,10 @@
                         });
                     });     
                     
-                    
-                    
-                    
+                    // REPORTS
+                    $('div#page_reports').on('pagebeforeshow', function(event){
+                        storage_RefreshList_Purchases('div_purchase_list');
+                    });
                     
                     
                     $("#span_footer").each(function(){
@@ -276,11 +351,11 @@
                 Total Money Spent - <span id='span_total_money'></span><br />
                 Total Budget Left - <span id='span_total_budget'></span><br />
                 <a href='#page_grocery_list' data-role='button'>Grocery List</a>
-                <a href='#page_item_bought' data-role='button'>Purchase</a>
+                <a href='#page_item_purchase' data-role='button'>Purchase</a>
                 <a href='#page_item' data-role='button'>Items</a>
                 <a href='#page_store' data-role='button'>Stores</a>
                 <a href='#page_budget' data-role='button'>Budget</a>
-                <a href='page_reports.htm' data-role='button' data-inline='true'>Reports</a>
+                <a href='#page_reports' data-role='button' data-inline='true'>Reports</a>
                 
             </div><!-- /content -->
             
@@ -335,7 +410,7 @@
         
         
         <!-- ITEMS - BOUGHT -->
-        <div data-role="page" id="page_item_bought">
+        <div data-role="page" id="page_item_purchase">
             <div data-role="header">
                 <a href='#' data-rel='back' data-icon='home'>Home</a>
                 <h1>Items Bought</h1>
@@ -344,16 +419,20 @@
             <div data-role="content">
                 <br />
                 Date of Purchase: <br />
-                <input type="date" id="input_bought_yearmonth" />
-                
+                <input type="date" id="input_purchase_yearmonth" />
                 Store:<br />
+                <input type="text" id="input_purchase_store" />
                 Product:<br />
+                <input type="text" id="input_purchase_product" />
                 Price:<br />
+                <input type="number" pattern="\d+(\.\d{1,2})?" min="1" max="10000" id="input_purchase_price" />
                 Quantity:<br />
+                <input type="number" id="input_purchase_quantity" />
+                Total Amount:<span id='span_purchase_amount'></span><br />
                 Remarks:<br />
+                <textarea rows="4" cols="50" id="textarea_purchase_remarks"></textarea>
                 
-                <a id='a_bought_save' href='#' data-role='button'>Save</a>
-                <a id='a_bought_refresh' href='#' data-role='button'>Refresh</a>
+                <a id='a_purchase_save' href='#' data-role='button'>Save</a>
             </div><!-- /content -->
             
             <div data-role="footer" data-position="fixed">
@@ -479,7 +558,26 @@
         
         
         
-        
+        <!-- REPORTS -->
+        <div data-role="page" id="page_reports">
+            
+            <div data-role="header">
+                <a href='#' data-rel='back' data-icon='home'>Home</a>
+                <h1>e-Grocery - Reports</h1>
+            </div><!-- /header -->
+            
+            <div data-role="content">
+                <h2>Purchases</h2>
+                <br />
+                <br />
+                <div id='div_purchase_list'></div>
+                <br />
+            </div><!-- /content -->
+            
+            <div data-role="footer" data-position="fixed">
+                
+            </div><!-- /footer -->
+        </div><!-- /page -->
         
         
         
