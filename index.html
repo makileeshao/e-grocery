@@ -253,6 +253,7 @@
                                 objPurchase.price = nPrice;
                                 objPurchase.quantity = nQuantity;
                                 objPurchase.remarks = $('#textarea_purchase_remarks').val();
+                                objPurchase.date = $('#input_purchase_yearmonth').val().trim();
                                 
                                 storage_addPurchase(objPurchase);
                                 alert('saved!');
@@ -322,6 +323,16 @@
                     // REPORTS
                     $('div#page_reports').on('pagebeforeshow', function(event){
                         storage_RefreshList_Purchases('div_purchase_list');
+                        
+                        // ACTION: CLEAR
+                        $('#a_clear_purchase_list').bind('click', function(){
+                            
+                            // clear list
+                            storage_removeAllPurchases();
+                            
+                            // refresh list
+                            storage_RefreshList_Purchases('div_purchase_list');
+                        });
                     });
                     
                     
@@ -572,6 +583,7 @@
                 <br />
                 <div id='div_purchase_list'></div>
                 <br />
+                <a href='#' id='a_clear_purchase_list' data-role='button' data-inline='true'>Clear List</a>
             </div><!-- /content -->
             
             <div data-role="footer" data-position="fixed">
