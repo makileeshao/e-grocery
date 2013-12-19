@@ -186,6 +186,12 @@
                             $('#span_purchase_amount').html('$' + nPrice * nQuantity);                            
                         });
                         
+                        // on store key press
+                        $("#input_purchase_store").keyup(function(){});
+                        $("#input_purchase_store").keyup(function(){
+                            storage_RefreshDataList_Stores('dl_stores', $('#input_purchase_store').val());
+                        });
+                        
                         // on price change
                         $('#input_purchase_price').unbind('change');
                         $('#input_purchase_price').bind('change', function(){
@@ -432,7 +438,13 @@
                 Date of Purchase: <br />
                 <input type="date" id="input_purchase_yearmonth" />
                 Store:<br />
-                <input type="text" id="input_purchase_store" />
+                <input type="text" id="input_purchase_store" list='dl_stores' />
+                <datalist id='dl_stores'>
+                    <option label='STR1' value='FairPrice'>
+                    <option label='STR2' value='Giant'>
+                    <option label='STR3' value='Value Plus'>
+                </datalist>
+                
                 Product:<br />
                 <input type="text" id="input_purchase_product" />
                 Price:<br />
